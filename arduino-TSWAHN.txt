@@ -1,0 +1,264 @@
+#include <Servo.h>
+Servo servo;
+const int trigPin_1 = 11;
+const int echoPin_1 = 10;
+const int trigPin_2 = 8;
+const int echoPin_2 = 9;
+const int trigPin_3 = 6;
+const int echoPin_3 = 7;
+const int ir_R = 12;
+const int ir_S = A1;
+const int ir_L = A2;
+const int motor1 = 2;
+const int motor_1 = 3;
+const int motor2 = 4;
+const int motor_2 = 5;
+
+void setup() {
+  Serial.begin(9600);
+  servo.attach(6);
+  pinMode(trigPin_1, OUTPUT);
+  pinMode(echoPin_1, INPUT);
+  pinMode(trigPin_2, OUTPUT);
+  pinMode(echoPin_2, INPUT);
+  pinMode(trigPin_3, OUTPUT);
+  pinMode(echoPin_3, INPUT);
+  pinMode(motor1, OUTPUT);
+  pinMode(motor_1, OUTPUT);
+  pinMode(motor2, OUTPUT);
+  pinMode(motor_2, OUTPUT);
+  pinMode(ir_R, INPUT);
+  pinMode(ir_S, INPUT);
+  pinMode(ir_L, INPUT);
+} long duration_1, distance_1, duration_2, distance_2, duration_3, distance_3;
+
+void loop() {
+  sensor_sound_1();
+  sensor_sound_2();
+  sensor_sound_3();
+  Stop();
+  if ((digitalRead(ir_R) >= 1) && (digitalRead(ir_S) >= 1) && (digitalRead(ir_L) >= 1) ) {
+    forword(); delay(500);
+    if (distance_2 < 20) {
+      right();
+    }
+    else if (distance_3 < 20)  {
+      left();
+    }
+    if (distance_2 == distance_3) {
+      left(); delay(500);
+    }
+    if ((distance_2 > 20) && (distance_3 > 20)) {
+      left(); delay(500);
+    }
+  }
+
+
+  if ((digitalRead(ir_R) <= 0) && (digitalRead(ir_S) <= 0) && (digitalRead(ir_L) <= 0)) {
+    if (distance_1 > 20) {
+      backword();
+    }
+    //==================================================//
+    if (distance_2 < 20) {
+      if (distance_3 > distance_2) {
+        right();
+      }
+      else {
+        left();
+      }
+    }
+    //===================================================//
+    if (distance_3 < 20)  {
+      if (distance_3 < distance_2) {
+        left();
+      }
+      else
+      {
+        right();
+      }
+    }
+    //=================================================//
+    if (distance_1 < 20) {
+      //================================================//
+      if (distance_2 < 20) {
+        if (distance_3 > distance_2) {
+          right();
+        }
+        else {
+          left();
+        }
+      }
+      //================================================//
+      if (distance_3 < 20)  {
+        if (distance_3 < distance_2) {
+          left();
+        }
+        else
+        {
+          right();
+        }
+      }
+      //=============================================//
+      if (distance_3 == distance_2) {
+        right();
+      }
+      if ((distance_3 > 20)||(distance_2 > 20)) {
+        right();
+      }
+    }
+  }
+
+  if ((digitalRead(ir_R) == 0) && (digitalRead(ir_S) == 0) && (digitalRead(ir_L) == 1)) {
+    forword(); delay(500);
+    if ((distance_3 > 20) && (distance_2 < 20))  {
+      right(); delay(500);
+    }
+    if ((distance_3 < 20) && (distance_2 > 20))  {
+      left(); delay(500);
+    }
+    if ((distance_3 < 20) && (distance_2 < 20))  {
+      forword();
+    }
+    if ((distance_2 > 20) && (distance_3 > 20)) {
+      left(); delay(500);
+    }
+  }
+
+  if ((digitalRead(ir_R) == 1) && (digitalRead(ir_S) == 0) && (digitalRead(ir_L) == 0)) {
+    forword(); delay(500);
+    if ((distance_3 > 20) && (distance_2 < 20))  {
+      right(); delay(500);
+    }
+    if ((distance_3 < 20) && (distance_2 > 20))  {
+      left(); delay(500);
+    }
+    if ((distance_3 < 20) && (distance_2 < 20))  {
+      forword();
+    }
+    if ((distance_2 > 20) && (distance_3 > 20)) {
+      right(); delay(500);
+    }
+  }
+
+  if ((digitalRead(ir_R) == 0) && (digitalRead(ir_S) == 1) && (digitalRead(ir_L) == 0)) {
+    forword(); delay(500);
+    if ((distance_3 > 20) && (distance_2 < 20))  {
+      right(); delay(500);
+    }
+    if ((distance_3 < 20) && (distance_2 > 20))  {
+      left(); delay(500);
+    }
+    if ((distance_3 < 20) && (distance_2 < 20))  {
+      forword();
+    }
+    if ((distance_2 > 20) && (distance_3 > 20)) {
+      left(); delay(500);
+    }
+  }
+  if ((digitalRead(ir_R) == 1) && (digitalRead(ir_S) == 1) && (digitalRead(ir_L) == 0)) {
+    forword(); delay(500);
+    if ((distance_3 > 20) && (distance_2 < 20))  {
+      right(); delay(500);
+    }
+    if ((distance_3 < 20) && (distance_2 > 20))  {
+      left(); delay(500);
+    }
+    if ((distance_3 < 20) && (distance_2 < 20))  {
+      forword();
+    }
+    if ((distance_2 > 20) && (distance_3 > 20)) {
+      right(); delay(500);
+    }
+  }
+  if ((digitalRead(ir_R) == 0) && (digitalRead(ir_S) == 1) && (digitalRead(ir_L) == 1)) {
+    forword(); delay(500);
+    if ((distance_3 > 20) && (distance_2 < 20))  {
+      right(); delay(500);
+    }
+    if ((distance_3 < 20) && (distance_2 > 20))  {
+      left(); delay(500);
+    }
+    if ((distance_3 < 20) && (distance_2 < 20))  {
+      forword();
+    }
+    if ((distance_2 > 20) && (distance_3 > 20)) {
+      left(); delay(500);
+    }
+  }
+  if ((digitalRead(ir_R) == 1) && (digitalRead(ir_S) == 0) && (digitalRead(ir_L) == 1)) {
+    forword(); delay(500);
+    if ((distance_3 > 20) && (distance_2 < 20))  {
+      right(); delay(500);
+    }
+    if ((distance_3 < 20) && (distance_2 > 20))  {
+      left(); delay(500);
+    }
+    if ((distance_3 < 20) && (distance_2 < 20))  {
+      forword();
+    }
+    if ((distance_2 > 20) && (distance_3 > 20)) {
+      left(); delay(500);
+    }
+  }
+}
+
+
+void left() {
+  digitalWrite(motor1, LOW);
+  digitalWrite(motor_1, HIGH);
+  digitalWrite(motor2, LOW);
+  digitalWrite(motor_2, HIGH);
+}
+void right() {
+  digitalWrite(motor1, HIGH);
+  digitalWrite(motor_1, LOW);
+  digitalWrite(motor2, HIGH);
+  digitalWrite(motor_2, LOW);
+}
+void forword() {
+  digitalWrite(motor1, LOW);
+  digitalWrite(motor_1, HIGH);
+  digitalWrite(motor2, HIGH);
+  digitalWrite(motor_2, LOW);
+}
+void backword() {
+  digitalWrite(motor1, HIGH);
+  digitalWrite(motor_1, LOW);
+  digitalWrite(motor2, LOW);
+  digitalWrite(motor_2, HIGH);
+}
+void Stop() {
+  digitalWrite(motor1, LOW);
+  digitalWrite(motor_1, LOW);
+  digitalWrite(motor2, LOW);
+  digitalWrite(motor_2, LOW);
+}
+void sensor_sound_1() {
+  digitalWrite(trigPin_1, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin_1, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin_1, LOW);
+  duration_1 = pulseIn(echoPin_1, HIGH);
+  distance_1 = duration_1 / 58.2;
+}
+
+void sensor_sound_2() {
+  digitalWrite(trigPin_2, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin_2, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin_2, LOW);
+  duration_2 = pulseIn(echoPin_2, HIGH);
+  distance_2 = duration_2 / 58.2;
+}
+
+void sensor_sound_3() {
+  digitalWrite(trigPin_3, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin_3, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin_3, LOW);
+  duration_3 = pulseIn(echoPin_3, HIGH);
+  distance_3 = duration_3 / 58.2;
+}

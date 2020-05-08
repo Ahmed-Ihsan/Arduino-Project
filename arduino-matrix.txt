@@ -1,0 +1,231 @@
+//?????? ???? ????? ???
+//????? ?????? ???????
+//????? ?????
+//2019/10/21
+//first test
+#include <Servo.h>
+#include <LedControl.h>
+LedControl lc = LedControl(2, 4, 3, 2);
+Servo servo;
+const int addrL = 0;
+const int addrR = 1;
+double val, val2;
+const double sund = A0;
+const double sund2 = A1;
+int v = 90, v2, v3 = 90;
+void setup() {
+    servo.attach(5);
+    Serial.begin(9600);
+    lc.shutdown(addrL, false);
+    lc.shutdown(addrR, false);
+    lc.setIntensity(addrL, 15);
+    lc.setIntensity(addrR, 15);
+    lc.clearDisplay(addrL);
+    lc.clearDisplay(addrR);
+    for (int row = 0; row < 8; row++) {
+        lc.setRow(addrL, row, 255);
+        lc.setRow(addrR, row, 255);
+        delay(100);
+     
+  }
+    delay(300);
+}
+
+void showNeutral() {
+    byte left[8] = {
+        B00111100,
+        B01111110,
+        B11000011,
+        B11000011,
+        B11000011,
+        B11000011,
+        B01111110,
+        B00111100
+     
+  };
+
+    displayEmotion(left, left);
+}
+
+void showAnger() {
+    byte left[8] = {
+        B00111100,
+        B01111110,
+        B10000111,
+        B10000111,
+        B10000111,
+        B10000111,
+        B01111110,
+        B00111100
+     
+  };
+    byte right[8] = {
+        B00111100,
+        B01111110,
+        B10000111,
+        B10000111,
+        B10000111,
+        B10000111,
+        B01111110,
+        B00111100
+     
+  };
+
+    displayEmotion(left, right);
+}
+
+void showSadness() {
+    byte left[8] = {
+        B00111100,
+        B01111110,
+        B11000011,
+        B11000011,
+        B11000011,
+        B11000011,
+        B01111110,
+        B00111100
+     
+  };
+    byte right[8] = {
+        B00111100,
+        B01111110,
+        B11000011,
+        B11000011,
+        B11000011,
+        B11000011,
+        B01111110,
+        B00111100
+     
+  };
+
+    displayEmotion(left, right);
+}
+void showSadnes1s() {
+    byte left[8] = {
+        B00111100,
+        B01111110,
+        B11100001,
+        B11100001,
+        B11100001,
+        B11100001,
+        B01111110,
+        B00111100
+     
+  };
+    byte right[8] = {
+        B00111100,
+        B01111110,
+        B11100001,
+        B11100001,
+        B11100001,
+        B11100001,
+        B01111110,
+        B00111100
+     
+  };
+
+    displayEmotion(left, right);
+}
+
+void showSadnes12s() {
+    byte left[8] = {
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B11111111
+     
+  };
+    byte right[8] = {
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B00000000,
+        B11111111
+     
+  };
+
+    displayEmotion(left, right);
+}
+
+void displayEmotion(byte left[8], byte right[8]) {
+    lc.clearDisplay(addrL);
+    lc.clearDisplay(addrR);
+    for (int row = 0; row < 8; row++) {
+        lc.setRow(addrL, row, left[row]);
+        lc.setRow(addrR, row, right[row]);
+     
+  }
+}
+
+void loop() {
+    myservo.write(90);
+    showNeutral();
+  sas();
+    showAnger();
+  sas();
+    showSadness();
+  sas();
+    showSadnes1s();
+  sas();
+    showSadnes12s();
+  sas();
+}
+void sas() {
+  val = analogRead(sund);
+  val2 = analogRead(sund2);
+  if (val > val2) {
+       for (int i = 90 , i <= 0 , i--) {
+      Serial.println(i);
+      servo.write(i);
+      val = analogRead(sund);
+      val2 = analogRead(sund2);
+      Serial.println(val2);
+      Serial.println(val);
+      if (val < val2)
+        break;
+    }
+  }
+  if (val < val2) {
+       for (int i = 90 , i <= 180 , i++) {
+          Serial.println(i);
+      servo.write(i);
+          val = analogRead(sund);
+          val2 = analogRead(sund2);
+          Serial.println(val2);
+          Serial.println(val);
+          if (val > val2)
+            break;
+    }
+  }
+  if (val >= val2 + 15 || val <= val2 + 15) {
+    servo.write(90);
+  }
+  showNeutral();
+  delay(800);
+    showAnger();
+  delay(800);
+    showSadness();
+    delay(800);
+    showSadnes1s();
+  delay(800);
+    showSadnes12s();
+  delay(800);
+  showNeutral();
+  delay(800);
+    showAnger();
+  delay(800);
+    showSadness();
+    delay(800);
+    showSadnes1s();
+  delay(800);
+    showSadnes12s();
+  delay(800);
+       
+}
