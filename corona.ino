@@ -3,26 +3,34 @@ Servo servo;
 const int trigPin_1 = 11;
 const int echoPin_1 = 10;
 const int relay = 12;
+int number = 100;
 
 void setup() {
   pinMode(trigPin_1, OUTPUT);
   pinMode(echoPin_1, INPUT);
-  pinMode(relay,OUTPUT);
+  pinMode(relay, OUTPUT);
 } long duration_1, distance_1;
 
 void loop() {
   sensor_sound_1();
-  digitalWrite(relay,HIGH);
-  if (distance_1 < 50){
-    digitalWrite(relay,LOW);
-    for(int i=0; i<10 ;i++){
-      delay(1000);
+  digitalWrite(relay, HIGH);
+
+  if (distance_1 < 200) {
+    digitalWrite(relay, LOW);
+
+    for (int i = 0; i < number ; i++) {
+      sensor_sound_1();
+      delay(100);
+
+      if (distance_1 < 200) {
+        /*int n = 10 - number
+          number = n + number;*/
+        number = 100;
+      }
     }
-    digitalWrite(relay,HIGH);
+    digitalWrite(relay, HIGH);
   }
 }
-
-
 
 void sensor_sound_1() {
   digitalWrite(trigPin_1, LOW);
