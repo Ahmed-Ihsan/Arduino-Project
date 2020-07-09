@@ -3,7 +3,8 @@ Servo servo;
 const int trigPin_1 = 11;
 const int echoPin_1 = 10;
 const int relay = 12;
-int number = 100;
+int n1 = 36;
+
 
 void setup() {
   pinMode(trigPin_1, OUTPUT);
@@ -15,22 +16,21 @@ void loop() {
   sensor_sound_1();
   digitalWrite(relay, HIGH);
 
-  if (distance_1 < 200) {
+  if (distance_1 < 100) {
     digitalWrite(relay, LOW);
 
-    for (int i = 0; i < number ; i++) {
+    for (int i = 0; i < n1 ; n1--) {
       sensor_sound_1();
       delay(100);
-
-      if (distance_1 < 200) {
-        /*int n = 10 - number
-          number = n + number;*/
-        number = 100;
+      if (distance_1 < 100) {
+        n1 = 36;
       }
     }
+    n1=36;
     digitalWrite(relay, HIGH);
   }
 }
+
 
 void sensor_sound_1() {
   digitalWrite(trigPin_1, LOW);
