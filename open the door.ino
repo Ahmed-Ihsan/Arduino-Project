@@ -18,7 +18,8 @@ void loop() {
   digitalWrite(LED, LOW); // LED OFF
   if (distance_1 < m) {
     digitalWrite(LED, HIGH);  // LED ON
-    for (int i = 0; i < n1 ; n1--) { // timer >= 10s
+    for (int i = 0; i < n1 ; n1--) { 
+      // timer >= 10s
       sensor_sound_1();
       delay(100);
       if (distance_1 < m) {
@@ -26,8 +27,8 @@ void loop() {
       }
     }
     n1=n; 
-    digitalWrite(LED,LOW); // relay off
-    delay(100); // for relay
+    digitalWrite(LED,LOW); 
+    delay(100); 
   }
 }
 
