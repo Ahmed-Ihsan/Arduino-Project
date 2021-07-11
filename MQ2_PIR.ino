@@ -6,7 +6,7 @@ int sensorThreshold = 100;
 int ledPin = 12;                
 int pirPin = 2;                
 int pirStat = 0; 
-
+int sensor_ = 0;
 void setup() {
   pinMode(LED1, OUTPUT);
   pinMode(buzzer, OUTPUT);
@@ -17,41 +17,53 @@ void setup() {
 }
 
 void loop() {
-  MQ_2();
-  PIR_SEN ();
+  if (Serial.available()){
+  sensor_ = Serial.read();
+  }
+  MQ_2(sensor_);
+  PIR_SEN (sensor_);
 }
 
 
-void PIR_SEN (){
+void PIR_SEN (int sensor_){
   
    pirStat = digitalRead(pirPin);
  if (pirStat == HIGH) {            // if motion detected
    digitalWrite(ledPin, HIGH);  // turn LED ON
-   Serial.println("SomeOne Front The Door");
+   if (sensor_){
+     Serial.println("SomeOne Front The Door");
+   }
  } 
  else {
    digitalWrite(ledPin, LOW); // turn LED OFF if we have no motion
-   Serial.println("no motion");
+   if (sensor_){
+     Serial.println("no motion");
+   }
  }
+  delay(100);
  
 }
 
-void MQ_2(){
+void MQ_2(int sensor_){
 
   int analogSensor = analogRead(smokeA0);
   // Checks if it has reached the threshold value
   if (analogSensor > sensorThreshold)
   {
       digitalWrite(LED1, HIGH);
-      Serial.println("There Is Danger In The Kitchen");
+      if (sensor_){
+        Serial.println("There Is Danger In The Kitchen");
+      }
       digitalWrite(buzzer, LOW);
   }
   else
   {
     digitalWrite(LED1, LOW);
-    Serial.println("safety");
+    if (sensor_){
+        Serial.println("safety");
+      }
     digitalWrite(buzzer, HIGH);
   }
-  delay(500);
+  delay(100);
   
 }
