@@ -1,9 +1,9 @@
-int LED1 = 12;
+int LED1 = 5;
 int buzzer = 10;
 int smokeA0 = A5;
 int sensorThreshold = 100;
 
-int ledPin = 12;                
+int ledPin = 6;                
 int pirPin = 2;                
 int pirStat = 0; 
 int sensor_ = 0;
@@ -30,13 +30,13 @@ void PIR_SEN (int sensor_){
    pirStat = digitalRead(pirPin);
  if (pirStat == HIGH) {            // if motion detected
    digitalWrite(ledPin, HIGH);  // turn LED ON
-   if (sensor_){
+   if (sensor_ == 110){
      Serial.println("SomeOne Front The Door");
    }
  } 
  else {
    digitalWrite(ledPin, LOW); // turn LED OFF if we have no motion
-   if (sensor_){
+   if (sensor_ == 110){
      Serial.println("no motion");
    }
  }
@@ -51,7 +51,7 @@ void MQ_2(int sensor_){
   if (analogSensor > sensorThreshold)
   {
       digitalWrite(LED1, HIGH);
-      if (sensor_){
+      if (sensor_ == 115 ){
         Serial.println("There Is Danger In The Kitchen");
       }
       digitalWrite(buzzer, LOW);
@@ -59,7 +59,7 @@ void MQ_2(int sensor_){
   else
   {
     digitalWrite(LED1, LOW);
-    if (sensor_){
+    if (sensor_ == 115){
         Serial.println("safety");
       }
     digitalWrite(buzzer, HIGH);
