@@ -1,3 +1,20 @@
+/*
+   -- New project --
+   
+   This source code of graphical user interface 
+   has been generated automatically by RemoteXY editor.
+   To compile this code using RemoteXY library 3.1.6 or later version 
+   download by link http://remotexy.com/en/library/
+   To connect using RemoteXY mobile app by link http://remotexy.com/en/download/                   
+     - for ANDROID 4.7.12 or later version;
+     - for iOS 1.4.7 or later version;
+    
+   This source code is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public
+   License as published by the Free Software Foundation; either
+   version 2.1 of the License, or (at your option) any later version.    
+*/
+
 //////////////////////////////////////////////
 //        RemoteXY include library          //
 //////////////////////////////////////////////
@@ -18,23 +35,25 @@
 // RemoteXY configurate  
 #pragma pack(push, 1)
 uint8_t RemoteXY_CONF[] =
-  { 255,16,0,0,0,163,0,11,13,1,
-  2,0,37,19,22,11,2,26,31,31,
+  { 255,16,0,0,0,181,0,11,13,1,
+  2,0,37,30,22,11,2,26,31,31,
   79,78,0,79,70,70,0,2,0,37,
-  34,22,11,2,26,31,31,79,78,0,
-  79,70,70,0,2,0,37,49,22,11,
+  43,22,11,2,26,31,31,79,78,0,
+  79,70,70,0,2,0,37,56,22,11,
   2,26,31,31,79,78,0,79,70,70,
-  0,2,0,37,64,22,11,2,26,31,
+  0,2,0,37,69,22,11,2,26,31,
   31,79,78,0,79,70,70,0,2,0,
-  37,79,22,11,2,26,31,31,79,78,
-  0,79,70,70,0,7,36,3,6,58,
-  8,2,26,2,11,129,0,1,22,18,
-  6,17,76,97,98,101,108,0,129,0,
-  1,37,18,6,17,76,97,98,101,108,
-  0,129,0,1,53,18,6,17,76,97,
-  98,101,108,0,129,0,1,67,18,6,
-  17,76,97,98,101,108,0,129,0,1,
-  81,18,6,17,76,97,98,101,108,0 };
+  37,82,22,11,2,26,31,31,79,78,
+  0,79,70,70,0,7,36,2,14,58,
+  8,2,26,2,11,129,0,4,33,18,
+  6,17,84,86,0,129,0,4,46,18,
+  6,17,70,97,110,0,129,0,4,59,
+  18,6,17,76,105,103,104,116,105,110,
+  103,0,129,0,4,72,18,6,17,99,
+  111,111,108,105,110,103,0,129,0,4,
+  84,18,6,17,82,101,102,114,105,103,
+  101,0,129,0,17,5,27,6,17,68,
+  111,111,114,32,75,101,121,0 };
   
 // this structure defines all the variables and events of your control interface 
 struct {
