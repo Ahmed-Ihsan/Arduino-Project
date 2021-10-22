@@ -43,7 +43,7 @@ void loop() {
   }
 
   if (Incoming_value == 'A' || A ) {
-    speed_ = 100 ;
+    speed_ = 200 ;
     auto_drive();
     B = 0;
     A = 1;
@@ -54,6 +54,7 @@ void loop() {
 }
 void auto_drive() {
  int D = chack();
+ Serial.print("forword = ");
  Serial.println(D);
   if(D <= 50 && D >= 0){
     if(st == 0 || st == 3){
@@ -68,7 +69,10 @@ void auto_drive() {
       if (st == 1){
         right();
         backword();
-        delay(500);
+        delay(200);
+        left();
+        forword();
+        delay(200);
       }else{
         stop_LR();
         stop_FB();
@@ -79,7 +83,10 @@ void auto_drive() {
       if(st == 2){
         left();
         backword();
-        delay(500);
+        delay(200);
+        right();
+        forword();
+        delay(200);
       }else{
         stop_LR();
         stop_FB();
@@ -124,8 +131,10 @@ void bletooth(char read_) {
 }
 
 int chack_L() {
-  servo_motor.write(150);
+  servo_motor.write(179);
   delay(500);
+  Serial.print("Left = ");
+  Serial.println(chack());
   chack();
   return distance ;
 }
@@ -138,8 +147,10 @@ int chack_F() {
 }
 
 int chack_R() {
-  servo_motor.write(42);
+  servo_motor.write(10);
   delay(500);
+  Serial.print("Right = ");
+  Serial.println(chack());
   chack();
   return distance ;
 }
