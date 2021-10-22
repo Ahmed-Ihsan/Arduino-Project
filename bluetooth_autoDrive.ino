@@ -43,7 +43,7 @@ void loop() {
   }
 
   if (Incoming_value == 'A' || A ) {
-    speed_ = 95 ;
+    speed_ = 100 ;
     auto_drive();
     B = 0;
     A = 1;
@@ -56,8 +56,12 @@ void auto_drive() {
  int D = chack();
  Serial.println(D);
   if(D <= 50 && D >= 0){
-    stop_LR();
-    stop_FB();
+    if(st == 0 || st == 3){
+      stop_LR();
+      stop_FB();
+      backword();
+    }
+    delay(300);
     int D_L = chack_L();
     int D_R = chack_R();
     if(D_L > D_R && D_R >= 0 ){
