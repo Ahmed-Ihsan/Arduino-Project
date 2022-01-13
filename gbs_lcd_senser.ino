@@ -145,9 +145,7 @@ void loop()
   s += "</body> </html>";
 
   client.print(s); // all the values are send to the webpage
-  Serial.print(lat_str);Serial.print("   ;   ");Serial.println(lng_str);
-  delay(100);
-
+  
   digitalWrite(trigPin, LOW);
   delayMicroseconds(2);
   // Sets the trigPin on HIGH state for 10 micro seconds
@@ -164,7 +162,7 @@ void loop()
   lcd.print("Distance(cm): ");
   lcd.println(distanceCm);
   lcd.setCursor(0, 1);
-  lcd.print("Box is full    ");
+  lcd.print("Box is full ---");
  }else{
   lcd.setCursor(0, 0);
   lcd.print("Distance(cm): ");
@@ -173,5 +171,5 @@ void loop()
   lcd.print("Box is not full");
  }
 
-
+delay(100);
 }
