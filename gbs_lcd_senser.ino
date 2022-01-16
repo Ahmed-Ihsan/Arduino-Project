@@ -11,6 +11,9 @@ int lcdRows = 2;
 
 const int trigPin = D6;
 const int echoPin = D7;
+int buzzer = D3;
+int led_g = D4;
+int led_r = D0;
 
 #define SOUND_VELOCITY 0.034
   
@@ -23,6 +26,7 @@ int pm;
 long duration;
 float distanceCm;
 float distanceInch;
+
 
 LiquidCrystal_I2C lcd(0x27, lcdColumns, lcdRows); 
 WiFiServer server(80);
@@ -49,6 +53,9 @@ void setup()
   Serial.println(WiFi.localIP());  // Print the IP address
   pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
   pinMode(echoPin, INPUT); // Sets the echoPin as an Input
+  pinMode(buzzer, OUTPUT);
+  pinMode(led_g, OUTPUT);
+  pinMode(led_r, OUTPUT);
 }
 
 
@@ -163,12 +170,21 @@ void loop()
   lcd.println(distanceCm);
   lcd.setCursor(0, 1);
   lcd.print("Box is full ---");
+  digitalWrite(led_g,LOW);
+  digitalWrite(led_r,HIGH);
+  tone(buzzer, 1000, 200);
+  delay(500);
+  noTone(buzzer);
+  delay(500);
  }else{
   lcd.setCursor(0, 0);
   lcd.print("Distance(cm): ");
   lcd.println(distanceCm);
   lcd.setCursor(0, 1);
   lcd.print("Box is not full");
+  noTone(buzzer);
+  digitalWrite(led_g,HIGH);
+  digitalWrite(led_r,LOW);
  }
 
 delay(100);
