@@ -50,6 +50,7 @@ void loop()
   if(fier){
     lcd.print(" -- fier");
   }
+  
   lcd.setCursor(0, 1);
   lcd.print("T: ");
   lcd.print(newT);
@@ -57,6 +58,10 @@ void loop()
   lcd.print("H: ");
   lcd.print(newH);
 
+  Blynk.virtualWrite(V0, newT);
+  Blynk.virtualWrite(V1, newH);
+  Blynk.virtualWrite(V2, analogSensor);
+  
   delay(1000);
   lcd.clear(); 
   if (analogSensor > sensorThres)
