@@ -13,24 +13,34 @@ int ldrW;   //غرب
 int ldrS;  //جنوب 
 int ldrE;   //شرق
 
+int ldr1;
+int ldr2;
+int ldr3;
+int ldr4;
+
 void setup() {
-  myservo_1.attach(9);  // 90 <-> 160
-  myservo_2.attach(10);
+  myservo_1.attach(9);  //pin 9
+  myservo_2.attach(10); //pin 10
   Serial.begin(9600);
 
    delay(500);
    
     degNS=90;
     degEW=90;
-    myservo_1.write(degNS);
-    myservo_2.write(degEW);
+    myservo_1.write(degNS); // 90 <-> 160
+    myservo_2.write(degEW); // 90 <-> 160
 }
 
 void loop() {
-  ldrN=analogRead(A0);
-  ldrW=analogRead(A1);
-  ldrS=analogRead(A2);
-  ldrE=analogRead(A3);
+  ldr1=analogRead(A0);
+  ldr2=analogRead(A1);
+  ldr3=analogRead(A2);
+  ldr4=analogRead(A3);
+  
+  ldrN = ldr1 + ldr2;
+  ldrW = ldr1 + ldr3;
+  ldrE = ldr2 + ldr4;
+  ldrS = ldr3 + ldr4;
   
   Serial.print("ldrN:");
   Serial.print(ldrN);
@@ -47,22 +57,17 @@ void loop() {
   Serial.println(degNS);
   delay(100);
  
-top(ldrS ,ldrW);
-top(ldrN ,ldrE);
-down(ldrW,ldrS);
-down(ldrE,ldrN);
-
-right(ldrW,ldrE);
-right(ldrS,ldrN);  
-left(ldrE,ldrW);  
-left(ldrN,ldrS);
+top(ldrS ,ldrN);
+down(ldrN,ldrS);
+right(ldrE,ldrW);  
+left(ldrW,ldrE);  
 
 }
 
-void top(int ldr1,int ldr2){
-if (ldr1>ldr2)  
+void top(int ldr_1,int ldr_2){
+if (ldr_1>ldr_2)  
   {
-     farkNS=ldr1-ldr2;
+     farkNS=ldr_1-ldr_2;
      if (farkNS>5)
      {
         if(degNS > 93){
@@ -73,10 +78,10 @@ if (ldr1>ldr2)
    }
 }
 
-void down(int ldr1,int ldr2){
-if (ldr1>ldr2)  
+void down(int ldr_1,int ldr_2){
+if (ldr_1>ldr_2)  
   {
-     farkNS=ldr1-ldr2;
+     farkNS=ldr_1-ldr_2;
      if (farkNS>5)
      {
         if(degNS < 160){
@@ -87,10 +92,10 @@ if (ldr1>ldr2)
    }
 }
 
-void right(int ldr1,int ldr2){
-if (ldr1>ldr2)  
+void right(int ldr_1,int ldr_2){
+if (ldr_1>ldr_2)  
   {
-     farkNS=ldr1-ldr2;
+     farkNS=ldr_1-ldr_2;
      if (farkNS>5)
      {
         if(degNS > 10){
@@ -102,9 +107,9 @@ if (ldr1>ldr2)
 }
 
 void left(int ldr1,int ldr2){
-if (ldr1>ldr2)  
+if (ldr_1>ldr_2)  
   {
-     farkNS=ldr1-ldr2;
+     farkNS=ldr_1-ldr_2;
      if (farkNS>5)
      {
         if(degNS > 10){
